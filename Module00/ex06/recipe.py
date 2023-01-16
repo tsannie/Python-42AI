@@ -40,3 +40,37 @@ def add_recipe():
     meal = input("Enter a meal type: ")
     prep_time = input("Enter a preparation time: ")
     cookbook[recipe_name] = {"ingredients": ingredients, "meal": meal, "prep_time": prep_time}
+
+def options_list():
+    print("List of available option:")
+    print("1: Add a recipe")
+    print("2: Delete a recipe")
+    print("3: Print a recipe")
+    print("4: Print the cookbook")
+    print("5: Quit\n")
+
+# main
+if __name__ == "__main__":
+    print("Welcome to the Python Cookbook !")
+    options_list()
+
+    while True:
+        choice = input("Please select an option by typing the corresponding number: \n>>> ")
+        if choice == "1":
+            add_recipe()
+        elif choice == "2":
+            recipe_name = input("Enter a recipe name: ")
+            delete_recipe(recipe_name)
+        elif choice == "3":
+            recipe_name = input("Please enter a recipe name to get its details: ")
+            print_recipe(recipe_name)
+        elif choice == "4":
+            print_recipe_names()
+        elif choice == "5":
+            break
+        else:
+            print("Sorry, this option does not exist.")
+            options_list()
+        print("")
+
+    print("Cookbook closed. Goodbye !")
