@@ -1,60 +1,86 @@
-import numpy as np
-
 class Vector:
     """ Vector class for linear algebra  """
 
-    def __init__(self, list_of_values):
-        if len(list_of_values) == 1:
-            print("len(args[0] = ", len(list_of_values))
-            self.values = np.array(list_of_values[0])
-            self.shape = (len(list_of_values[0]), 1)
+    def __init__(self, arg):
+        if isinstance(arg, list):
+            self.values = []
+            if len(arg) == 1:
+                self.values.insert(0, arg[0].copy())
+                self.shape = (1, len(arg[0]))
+            else:
+                for i in range(len(arg)):
+                    self.values.insert(i, arg[i].copy())
+                self.shape = (len(arg), 1)
+        elif isinstance(arg, int):
+            self.values = [[42] * 1 for i in range(arg)]
+            for i in range(arg):
+                self.values[i][0] = float(i)
+            self.shape = (arg, 1)
+        elif isinstance(arg, tuple):
+            interval = arg[1] - arg[0]
+            if interval < 0:
+                raise ValueError("arg[1] must be greater than arg[0]")
+            self.values = [[42] * 1 for i in range(interval)]
+            for i in range(interval):
+                self.values[i][0] = float(i + arg[0])
+            self.shape = (interval, 1)
         else:
-            self.values = np.array(list_of_values)
-            self.shape = (1, len(list_of_values))
-        print(self.shape)
-        print(self.values)
+            raise TypeError("arg must be a list, int or a tuple")
 
     def dot(self, v):
-        return np.dot(self.values, v.values)
+        """ returns the dot product of two vectors """
+        if self.shape[0] != v.shape[0] or self.shape[1] != v.shape[1]:
+            raise ValueError("vectors must have the same shape")
+        ret = 0
+        for i in range(self.shape[0]):
+            for j in range(self.shape[1]):
+                ret += self.values[i][j] * v.values[i][j]
+        return ret
 
     def T(self):
-        return np.transpose(self.values)
-
-    def __add__(self, n):
-        ret = np.add(self.values, n)
-        if self.shape[0] == 1:
-            return Vector(ret[0])
-        return Vector(ret)
-
-    def __sub__(self, n):
-        return np.subtract(self.values, n)
+        """ returns the transpose of the vector """
+        t_value = [[42] * self.shape[0] for i in range(self.shape[1])]
+        for i in range(self.shape[0]):
+            for j in range(self.shape[1]):
+                t_value[j][i] = self.values[i][j]
+        return Vector(t_value)
 
     def __mul__(self, n):
-        return np.multiply(self.values, n)
+        ret = Vector(self.values)
+        for i in range(self.shape[0]):
+            for j in range(self.shape[1]):
+                ret.values[i][j] *= n
+        return ret
 
     def __rmul__(self, n):
-        return np.multiply(self.values, n)
+        return self.__mul__(n)
 
     def __truediv__(self, n):
-        return np.divide(self.values, n)
+        if n == 0:
+            raise ZeroDivisionError("division by zero.")
+
+        ret = Vector(self.values)
+        for i in range(self.shape[0]):
+            for j in range(self.shape[1]):
+                ret.values[i][j] /= n
+        return ret
+
+    def __rtruediv__(self, v):
+        raise NotImplementedError("Division of a scalar by a Vector is not defined here.")
+
+    """ def __sub__(self, n):
+        return np.subtract(self.values, n)
+
+    def __truediv__(self, n):
+        return np.divide(self.values, n) """
 
     def __str__(self):
-        ret = "Vector(["
-        if self.shape[0] == 1:
-            for i in range(self.shape[1]):
-                ret += "{:.1f}".format(self.values[i])
-                if i != len(self.values) - 1:
-                    ret += ", "
-        else:
-            for i in range(self.shape[0]):
-                ret += "{:.1f}".format(i)
-                if i != len(self.values) - 1:
-                    ret += ", "
-
-            """ for i in range(len(self.values)):
-                ret += "{:.1f}".format(self.values[i][0])
-                if i != len(self.values) - 1:
-                    ret += ", " """
-        ret += "])"
+        ret = "Vector("
+        ret += str(self.values)
+        ret += ")"
         return ret
+
+    def __repr__(self):
+        return self.__str__() + " | Shape: " + str(self.shape)
+
 
