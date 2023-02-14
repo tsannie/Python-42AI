@@ -104,3 +104,49 @@ print(repr(test1))
 
 test2 = Vector((10,16))
 print(repr(test2))
+print()
+
+print("__add__:")
+v1 = Vector([[0.0], [1.0], [2.0], [3.0]])
+v2 = Vector([[2.0], [1.5], [2.25], [4.0]])
+print(v1 + v2)
+# Expected output: Vector([[2.0], [2.5], [4.25], [7.0]])
+try:
+  print(v1 + 2.0)
+except TypeError as e:
+  print("TypeError:", e)
+# Expected output: TypeError: must be a Vector
+print()
+
+print("__radd__:")
+try:
+  print(2.0 + v1)
+except NotImplementedError as e:
+  print("NotImplementedError:", e)
+# Expected output: NotImplementedError: Addition of a scalar to a Vector is not defined here.
+print()
+
+print("__sub__:")
+v1 = Vector([[0.0], [1.0], [2.0], [3.0]])
+v2 = Vector([[2.0], [1.5], [2.25], [4.0]])
+print(v1 - v2)
+# Expected output: Vector([[-2.0], [-0.5], [-0.25], [-1.0]])
+try:
+  print(v1 - 2.0)
+except TypeError as e:
+  print("TypeError:", e)
+# Expected output: TypeError: must be a Vector
+print()
+
+print("__rsub__:")
+try:
+  print(2.0 - v1)
+except NotImplementedError as e:
+  print("NotImplementedError:", e)
+# Expected output: NotImplementedError: Subtraction of a scalar from a Vector is not defined here.
+print()
+
+
+print(v1 * 2.5)
+
+

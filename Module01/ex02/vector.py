@@ -11,7 +11,7 @@ class Vector:
                 for i in range(len(arg)):
                     self.values.insert(i, arg[i].copy())
                 self.shape = (len(arg), 1)
-        elif isinstance(arg, int):
+        elif isinstance(arg, (int, float)):
             self.values = [[42] * 1 for i in range(arg)]
             for i in range(arg):
                 self.values[i][0] = float(i)
@@ -29,6 +29,8 @@ class Vector:
 
     def dot(self, v):
         """ returns the dot product of two vectors """
+        if not isinstance(v, Vector):
+            raise TypeError("must be a Vector")
         if self.shape[0] != v.shape[0] or self.shape[1] != v.shape[1]:
             raise ValueError("vectors must have the same shape")
         ret = 0
@@ -46,6 +48,8 @@ class Vector:
         return Vector(t_value)
 
     def __mul__(self, n):
+        if not isinstance(n, (int, float)):
+            raise TypeError("must be a number")
         ret = Vector(self.values)
         for i in range(self.shape[0]):
             for j in range(self.shape[1]):
@@ -56,6 +60,8 @@ class Vector:
         return self.__mul__(n)
 
     def __truediv__(self, n):
+        if not isinstance(n, (int, float)):
+            raise TypeError("must be a number")
         if n == 0:
             raise ZeroDivisionError("division by zero.")
 
@@ -68,11 +74,33 @@ class Vector:
     def __rtruediv__(self, v):
         raise NotImplementedError("Division of a scalar by a Vector is not defined here.")
 
-    """ def __sub__(self, n):
-        return np.subtract(self.values, n)
+    def __add__(self, v):
+        if not isinstance(v, Vector):
+            raise TypeError("must be a Vector")
+        if self.shape[0] != v.shape[0] or self.shape[1] != v.shape[1]:
+            raise ValueError("vectors must have the same shape")
+        ret = Vector(self.values)
+        for i in range(self.shape[0]):
+            for j in range(self.shape[1]):
+                ret.values[i][j] += v.values[i][j]
+        return ret
 
-    def __truediv__(self, n):
-        return np.divide(self.values, n) """
+    def __radd__(self, v):
+        raise NotImplementedError("Addition of a scalar to a Vector is not defined here.")
+
+    def __sub__(self, v):
+        if not isinstance(v, Vector):
+            raise TypeError("must be a Vector")
+        if self.shape[0] != v.shape[0] or self.shape[1] != v.shape[1]:
+            raise ValueError("vectors must have the same shape")
+        ret = Vector(self.values)
+        for i in range(self.shape[0]):
+            for j in range(self.shape[1]):
+                ret.values[i][j] -= v.values[i][j]
+        return ret
+
+    def __rsub__(self, v):
+        raise NotImplementedError("Subtraction of a scalar from a Vector is not defined here.")
 
     def __str__(self):
         ret = "Vector("
