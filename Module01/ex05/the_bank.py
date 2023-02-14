@@ -47,8 +47,6 @@ class Bank(object):
     @amount: float(amount) amount to transfer
     @return True if success, False if an error occured
     """
-
-    # getaccounts by name
     origin_account = None
     dest_account = None
     for account in self.accounts:
@@ -66,20 +64,40 @@ class Bank(object):
     if amount < 0 or amount > origin_account.value:
       return False
 
-    origin_account.value -= amount
-    dest_account.value += amount
+    origin_account.transfer(-amount)
+    dest_account.transfer(amount)
     return True
-
-
-
-
 
   def fix_account(self, name):
     """ fix account associated to name if corrupted
     @name: str(name) of the account
     @return True if success, False if an error occured
     """
-    # ... Your code ...
+    account_to_fix = None
+    for account in self.accounts:
+      if account.name == name:
+        account_to_fix = account
+        break
+
+    if account_to_fix is None:
+      return False
+
+    if not hasattr(account_to_fix, 'value'):
+      account_to_fix.value = 0
+    if not hasattr(account_to_fix, 'id'):
+      account_to_fix.id = Account.ID_COUNT
+      Account.ID_COUNT += 1
+
+    for attribute in account_to_fix.__dict__:
+      if attribute.startswith('b'):
+        delattr(account_to_fix, attribute)
+      if attribute.startswith('zip') or attribute.startswith('addr'): # TODO check
+        setattr(account_to_fix, 'zip_or_addr', getattr(account_to_fix, attribute))
+        delattr(account_to_fix, attribute)
+
+    return True
+
+
 
   def __corrupt_account(self, account):
     """ Check if account is corrupted
