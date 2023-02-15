@@ -14,8 +14,10 @@ class CsvReader():
       self.fd = open(self.filename, 'r')
       self.data = self.fd.read().splitlines()
       self.data = [line.split(self.sep) for line in self.data]
+      for line in self.data:
+        if len(line) != len(self.data[0]):
+          return None
     except:
-      print("File is corrupted")
       return None
     return self
 
