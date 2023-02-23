@@ -3,7 +3,7 @@ from NumPyCreator import NumPyCreator
 npc = NumPyCreator()
 
 print("Testing from_list:")
-a = npc.from_list([[1,2,3],[6,3,4]])
+a = npc.from_list([[1,2,3], [6,3,4]])
 print(a)
 # Output :
 #array([[1, 2, 3],
@@ -14,6 +14,7 @@ print(a)
 #None
 a = npc.from_list([[1,2,3],['a','b','c'],[6,4,7]])
 print(a)
+print(a.dtype)
 # Output :
 #array([['1','2','3'],
 #['a','b','c'],

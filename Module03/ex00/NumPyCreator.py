@@ -1,26 +1,43 @@
 import numpy as np
 
+def check_type(obj, dtype):
+    if not isinstance(obj, dtype) or not isinstance(obj[0], (list, tuple)):
+        return False
+    for i in range(len(obj)):
+        if not isinstance(obj[i], type(obj[0])) or len(obj[i]) != len(obj[0]):
+            return False
+    return True
+
+
+
 class NumPyCreator:
-    """This class will help you manipulate lists and tuples into numpy arrays"""
 
-    def from_list(self, lst):
-        """"takes a list or nested lists and returns its corresponding Numpy array"""
+    @staticmethod
+    def from_list(lst, dtype=None):
+        if check_type(lst, list):
+            return np.array(lst, dtype)
+        return None
 
-        return np.array(lst, dtype=object)
+    @staticmethod
+    def from_tuple(tpl, dtype=None):
+        if check_type(tpl, tuple):
+            return np.array(tpl, dtype)
+        return None
 
-    def from_tuple(self, tpl):
-        """"takes a tuple or nested tuples and returns its corresponding Numpy array"""
-        return np.array(tpl)
-
-    def from_iterable(self, itr):
-        """"takes an iterable and returns an array which contains all its elements."""
+    @staticmethod
+    def from_iterable(itr):
         return np.array(itr)
 
-    def from_shape(self, shape, value=0):
+    @staticmethod
+    def from_shape(shape, value=0):
         return np.full(shape, value)
 
-    def random(self, shape):
+    @staticmethod
+    def random(shape):
         return np.random.random(shape)
 
-    def identity(self, n):
+    @staticmethod
+    def identity(n):
         return np.identity(n)
+
+a = NumPyCreator().from_list([[1,2,3],['a','b','c'],[6,4,7]])
