@@ -1,3 +1,5 @@
+import numpy as np
+
 class ScrapBooker:
     # within the class
     def crop(self, array, dim, position=(0,0)):
@@ -17,6 +19,18 @@ class ScrapBooker:
         ------
         This function should not raise any Exception.
         """
+        #spb.crop(arr1, (3,1),(1,0))
+
+        if not isinstance(array, np.ndarray):
+            return None
+        if not isinstance(dim, tuple) or len(dim) != 2:
+            return None
+        if not isinstance(position, tuple) or len(position) != 2:
+            return None
+
+        if dim[0] + position[0] > array.shape[0] or dim[1] + position[1] > array.shape[1]:
+            return None
+        return array[position[0]: position[0] + dim[0], position[1]: position[1] + dim[1]]
 
 
 
@@ -37,6 +51,19 @@ class ScrapBooker:
         ------
         This function should not raise any Exception.
         """
+        if not isinstance(array, np.ndarray):
+            return None
+        if not isinstance(n, int) or n <= 0:
+            return None
+        if not isinstance(axis, int) or axis not in [0, 1]:
+            return None
+
+        if axis == 0 and n > array.shape[0]:
+            return None
+        if axis == 1 and n > array.shape[1]:
+            return None
+
+        return np.delete(array, np.s_[::n], axis)
 
     def juxtapose(self, array, n, axis):
         """
