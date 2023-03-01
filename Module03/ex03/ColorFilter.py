@@ -162,4 +162,23 @@ class ColorFilter:
                     pixel[1] = color
                     pixel[2] = color
             return new
+        elif filter in ['w', 'weight']:
+            # check weights
+            if 'weights' not in kwargs:
+                return None
+            weights = kwargs['weights']
+            if len(weights) != 3:
+                return None
+            if np.sum(weights) != 1:
+                return None
+            new = array.copy()
+            for colomn in new:
+                for pixel in colomn:
+                    color = np.sum(pixel * weights)
+                    pixel[0] = color
+                    pixel[1] = color
+                    pixel[2] = color
+            return new
+
+
 
