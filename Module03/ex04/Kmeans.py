@@ -25,12 +25,32 @@ class KmeansClustering:
         self.stable = False # True if the centroids are stable
 
         #plt
-        fig = plt.figure()
-        self.ax = fig.add_subplot(111, projection='3d')
+        self.ax = plt.axes(projection='3d')
 
 
     def distance(self, x, y):
         return np.square(np.sum((x - y) ** 2))
+
+    def display(self, data, c, i):
+        #output
+        print("##########################")
+        print("Iteration {}:".format(i))
+        for e in range(self.centroids.shape[0]):
+            print("Centroid {}: {}".format(e+1, self.centroids[e]))
+            print("Number of data points in cluster: {}".format(np.sum(c == e)))
+            print()
+        print("Score: {:.2f}".format(self.last_scores))
+
+
+        #plt
+        self.ax.clear()
+        self.ax.set_xlabel('height')
+        self.ax.set_ylabel('weight')
+        self.ax.set_zlabel('bone_density')
+        self.ax.set_title("solar_system_census")
+        self.ax.scatter(data[:, 0], data[:, 1], data[:, 2], c=c)
+        self.ax.scatter(self.centroids[:, 0], self.centroids[:, 1], self.centroids[:, 2], c='red', marker='x')
+        plt.pause(1)
 
     def fit(self, X):
         """
@@ -60,17 +80,7 @@ class KmeansClustering:
             i_min = self.predict(X)
             for j in range(self.centroids.shape[0]):
                 self.centroids[j] = np.mean(X[i_min == j], axis=0)
-
-            #plt
-            self.ax.clear()
-            self.ax.set_xlabel('X Label')
-            self.ax.set_ylabel('Y Label')
-            self.ax.set_zlabel('Z Label')
-            self.ax.set_title("K-means Clustering")
-            self.ax.scatter(X[:, 0], X[:, 1], X[:, 2], c=i_min)
-            self.ax.scatter(self.centroids[:, 0], self.centroids[:, 1], self.centroids[:, 2], c='red', marker='x')
-            print("Iteration: {}".format(i))
-            plt.pause(1)
+            self.display(X, i_min, i)
             if self.stable:
                 break
 
@@ -98,27 +108,42 @@ class KmeansClustering:
         score = 0.0
         for i in range(dist.shape[0]):
             score += dist[i][i_min[i]]
-        print("Score: {}".format(score))
         if score == self.last_scores:
             self.stable = True
         self.last_scores = score
 
         return i_min
 
+def fatal():
+    print("Usage: python Kmeans.py  filepath=[path_to_dataset] ncentroid=[ncentroid] max_iter=[max_iter]")
+    exit()
+
 if __name__ == "__main__":
 
-    args = {key: value for arg in sys.argv[1:] for key, value in [arg.split("=")]}
-    if len(args) != 3 or "filepath" not in args or "ncentroid" not in args or "max_iter" not in args:
-        print("Usage: python Kmeans.py  filepath=[path_to_dataset] ncentroid=[ncentroid] max_iter=[max_iter]")
-        exit()
+    a = {}
+    for arg in sys.argv[1:]:
+        s = arg.split("=")
+        if len(s) != 2 or s[0] not in ["filepath", "ncentroid", "max_iter"] or s[0] in a:
+            fatal()
+        a[s[0]] = s[1]
 
-    with csv(args["filepath"], header=True) as file:
+    print(a)
+
+    if "ncentroid" not in a:
+        a["ncentroid"] = 4
+    if "max_iter" not in a:
+        a["max_iter"] = 20
+
+    with csv(a["filepath"], header=True) as file:
         data = file.getdata()
         data = np.array(data).astype(float)
     data = data[:, 1:]
 
-    kc = KmeansClustering(int(args["max_iter"]), int(args["ncentroid"]))
-    kc.fit(data)
+    try:
+        kc = KmeansClustering(int(a["max_iter"]), int(a["ncentroid"]))
+        kc.fit(data)
+    except:
+        fatal()
 
 
 
