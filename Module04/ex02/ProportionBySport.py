@@ -15,12 +15,12 @@ def proportion_by_sport(df, year, sport, gender):
         return None
 
     try:
-      total = df[(df['Year'] == year) & (df['Sex'] == gender)]
-      total_sport = total[total['Sport'] == sport]
-      return total_sport['Name'].unique().shape[0] / total['Name'].unique().shape[0]
+        total = df[(df['Year'] == year) & (df['Sex'] == gender)]
+        total_sport = total[total['Sport'] == sport]
+        return total_sport['ID'].unique().shape[0] / total['ID'].unique().shape[0]
     except:
-      print("Error.")
-      return 0
+        print("Error.")
+        return 0
 
 
 
