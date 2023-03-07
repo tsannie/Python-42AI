@@ -11,3 +11,9 @@ kmp = Komparator(data)
 print("Test compare_box_plots:")
 kmp.compare_box_plots('Medal', 'Age')
 
+print("Test density:")
+kmp.density("Sex", "Age")
+
+print("Test compare_histograms:")
+kmp.compare_histograms("Medal", "Age")
+
