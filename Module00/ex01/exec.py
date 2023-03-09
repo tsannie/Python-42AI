@@ -12,10 +12,10 @@ def reverse_and_swap(string):
 
   print(swapped_string)
 
-args = sys.argv[1:]
-
-if not args:
-  print("Usage: python exec.py [string]")
-else:
-  string = " ".join(args)
-  reverse_and_swap(string)
+if __name__ == "__main__":
+  args = sys.argv[1:]
+  if not args:
+    print("Usage: python exec.py [string]")
+  else:
+    string = " ".join(args)
+    reverse_and_swap(string)

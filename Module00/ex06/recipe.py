@@ -19,39 +19,73 @@ cookbook= {
 def print_recipe_names():
     print("Recipes:")
     for recipe in cookbook:
-        print(recipe)
+        print("- ", recipe)
 
 def print_recipe(recipe_name):
+    if recipe_name not in cookbook:
+        print("Sorry, this recipe does not exist in the cookbook.")
+        return
     print("Recipe for " + recipe_name + ":")
     print("Ingredients list: " + str(cookbook[recipe_name]["ingredients"]))
     print("To be eaten for " + cookbook[recipe_name]["meal"] + ".")
     print("Takes " + str(cookbook[recipe_name]["prep_time"]) + " minutes of cooking.")
 
 def delete_recipe(recipe_name):
-    del cookbook[recipe_name]
+    if recipe_name in cookbook:
+        print("Recipe for " + recipe_name + " deleted.")
+        del cookbook[recipe_name]
+    else:
+        print("Sorry, this recipe does not exist in the cookbook.")
 
 def add_recipe():
-    recipe_name = input("Enter a name: ")
-    ingredients = []
+    while 42:
+        recipe_name = input("Enter a name: ")
+        if recipe_name in cookbook:
+            print("Sorry, this recipe already exists in the cookbook.")
+            continue
+        if isinstance(recipe_name, str) and recipe_name != "":
+            break
+        print("Sorry, this is not a valid name.")
     print("Enter ingredients (or nothing to stop):")
-    while True:
+
+    ingredients = []
+    while 42:
         ingredient = input("- ")
         if ingredient == "":
+            if len(ingredients) == 0:
+                print("Sorry, you must enter at least one ingredient.")
+                continue
             break
+        if ingredient in ingredients:
+            print("Sorry, this ingredient already exists in the recipe.")
+            continue
         ingredients.append(ingredient)
-    meal = input("Enter a meal type: ")
-    prep_time = input("Enter a preparation time: ")
+
+    while 42:
+        meal = input("Enter a meal type: ")
+        if isinstance(meal, str) and meal != "" and not all(c.isdigit() for c in meal):
+            break
+        print("Sorry, this is not a valid meal type.")
+
+    while 42:
+        prep_time = input("Enter a preparation time: ")
+        try:
+            prep_time = int(prep_time)
+            if prep_time > 0:
+                break
+        except ValueError:
+            pass
+        print("Sorry, this is not a valid preparation time.")
     cookbook[recipe_name] = {"ingredients": ingredients, "meal": meal, "prep_time": prep_time}
 
 def options_list():
-    print("List of available option:")
+    print("\nList of available option:")
     print("1: Add a recipe")
     print("2: Delete a recipe")
     print("3: Print a recipe")
     print("4: Print the cookbook")
     print("5: Quit\n")
 
-# main
 if __name__ == "__main__":
     print("Welcome to the Python Cookbook !")
     options_list()
@@ -72,7 +106,7 @@ if __name__ == "__main__":
             break
         else:
             print("Sorry, this option does not exist.")
-            options_list()
+        options_list()
         print("")
 
     print("Cookbook closed. Goodbye !")

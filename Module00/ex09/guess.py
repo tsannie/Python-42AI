@@ -15,7 +15,6 @@ def guess():
     while True:
         print("What's your guess between 1 and 99?")
         guess = input(">> ")
-        attempts += 1
         if guess == "exit":
             print("Goodbye!")
             break
@@ -26,6 +25,7 @@ def guess():
             print("That's not a number.")
             continue
 
+        attempts += 1
         if guess == secret:
             found(attempts, secret)
             break

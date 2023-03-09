@@ -11,6 +11,7 @@ class CsvReader():
 
   def __enter__(self):
     try:
+      print(self.filename)
       self.fd = open(self.filename, 'r')
       self.data = self.fd.read().splitlines()
       self.data = [line.split(self.sep) for line in self.data]

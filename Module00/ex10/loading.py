@@ -1,11 +1,11 @@
 import sys
-import time
+from time import sleep, time
 
 def ft_progress(listy):
     size = len(listy)
-    start = time.time()
+    start = time()
     for i in listy:
-        time_spent = time.time() - start
+        time_spent = time() - start
         percent = (i + 1) / size
         eta = time_spent / percent - time_spent
         bar = int(percent * 40)
@@ -21,6 +21,6 @@ listy = range(1000)
 ret = 0
 for elem in ft_progress(listy):
     ret += (elem + 3) % 5
-    time.sleep(0.01)
+    sleep(0.01)
 print()
 print(ret)

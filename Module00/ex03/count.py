@@ -35,7 +35,9 @@ def text_analyzer(arg=None):
 
 
 if __name__ == "__main__":
-  if (len(sys.argv) > 1):
+  if (len(sys.argv) > 2):
     print("Usage: python count.py <text>")
-  else:
+  elif (len(sys.argv) == 2):
+    text_analyzer(sys.argv[1])
+  elif (len(sys.argv) == 1):
     text_analyzer()
