@@ -17,7 +17,6 @@ class Book:
             'dessert': [],
         }
 
-
     def get_recipe_by_name(self, name):
         """Prints a recipe with the name \texttt{name} and returns the instance"""
         #... Your code here ...
@@ -28,7 +27,6 @@ class Book:
                     return recipe
         print(name + " not found")
         return None
-
 
     def get_recipes_by_types(self, recipe_type):
         """Get all recipe names for a given recipe_type """
