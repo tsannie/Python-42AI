@@ -119,7 +119,6 @@ class Bank(object):
         @account: Account() account to check for corruption
         @return True if success, False if an error occured
         """
-
         if len(account.__dict__) % 2:
             return True
 

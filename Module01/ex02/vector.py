@@ -86,7 +86,7 @@ class Vector:
         return ret
 
     def __radd__(self, v):
-        raise NotImplementedError("Addition of a scalar to a Vector is not defined here.")
+        return self.__add__(v)
 
     def __sub__(self, v):
         if not isinstance(v, Vector):
@@ -100,7 +100,7 @@ class Vector:
         return ret
 
     def __rsub__(self, v):
-        raise NotImplementedError("Subtraction of a scalar from a Vector is not defined here.")
+        return self.__sub__(v)
 
     def __str__(self):
         ret = "Vector("

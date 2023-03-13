@@ -12,9 +12,10 @@ v1 = Vector([[0.0, 1.0, 2.0, 3.0]])
 v2 = v1 * 5
 print("v1", v1)
 print("v2", v2)
-
 # Expected output
-# Vector([[0.0, 5.0, 10.0, 15.0]])
+# v1 Vector([[0.0, 1.0, 2.0, 3.0]])
+# v2 Vector([[0.0, 5.0, 10.0, 15.0]])
+print()
 
 v2 = v1 / 2.0
 print(v2)
@@ -100,6 +101,7 @@ print(v1)
 # Expected output: to see w
 
 test1 = Vector(3)
+print("__repr__:")
 print(repr(test1))
 
 test2 = Vector((10,16))
@@ -119,11 +121,8 @@ except TypeError as e:
 print()
 
 print("__radd__:")
-try:
-  print(2.0 + v1)
-except NotImplementedError as e:
-  print("NotImplementedError:", e)
-# Expected output: NotImplementedError: Addition of a scalar to a Vector is not defined here.
+print(v2 + v1)
+# Expected output: Vector([[2.0], [2.5], [4.25], [7.0]])
 print()
 
 print("__sub__:")
@@ -136,17 +135,44 @@ try:
 except TypeError as e:
   print("TypeError:", e)
 # Expected output: TypeError: must be a Vector
+v3 = Vector([[1.0, 3.0]])
+try:
+  print(v1 - v3)
+except ValueError as e:
+  print("ValueError:", e)
+# ValueError: vectors must have the same shape
 print()
 
 print("__rsub__:")
-try:
-  print(2.0 - v1)
-except NotImplementedError as e:
-  print("NotImplementedError:", e)
-# Expected output: NotImplementedError: Subtraction of a scalar from a Vector is not defined here.
+print(v2 - v1)
+# Expected output: Vector([[2.0], [0.5], [0.25], [1.0]])
 print()
 
-
+print("__mul__:")
 print(v1 * 2.5)
+# Expected output: Vector([[0.0], [2.5], [5.0], [7.5]])
+print()
 
+print("__rmul__:")
+print(2.5 * v1)
+# Expected output: Vector([[0.0], [2.5], [5.0], [7.5]])
+print()
+
+print("__truediv__:")
+print(v1 / 2.0)
+# Expected output: Vector([[0.0], [0.5], [1.0], [1.5]])
+try:
+  print(v1 / 0.0)
+except ZeroDivisionError as e:
+  print("ZeroDivisionError:", e)
+# Expected output: ZeroDivisionError: division by zero
+print()
+
+print("__rtruediv__:")
+try:
+  print(2.0 / v1)
+except NotImplementedError as e:
+  print("NotImplementedError:", e)
+# Expected output: NotImplementedError: Division of a scalar by a Vector is not defined here.
+print()
 
