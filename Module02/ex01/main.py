@@ -8,8 +8,6 @@ def what_are_the_vars(*args, **kwargs):
     Returns:
         An ObjectC object with named attributes initialized with the provided arguments.
     """
-    print(args)
-    print(kwargs)
     obj = ObjectC()
     for i in range(len(args)):
         setattr(obj, "var_" + str(i), args[i])

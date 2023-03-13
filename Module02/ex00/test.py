@@ -14,7 +14,7 @@ print(t)
 # Output:
 #[2, 3, 4, 5, 6]
 try:
-    t = list(ft_map(lambda t: t + 1, 10))
+    t = list(ft_map(lambda t: t + 1, 42))
 except TypeError as e:
     print(e)
 # Output:
@@ -32,7 +32,7 @@ print(t)
 # Output:
 #[2, 4]
 try:
-    t = list(ft_filter(lambda dum: not (dum % 2), 10))
+    t = list(ft_filter(lambda dum: not (dum % 2), 42))
 except TypeError as e:
     print(e)
 # Output:
@@ -47,7 +47,7 @@ print(t)
 # Output:
 "Hello world"
 try:
-    t = ft_reduce(lambda u, v: u + v, 10)
+    t = ft_reduce(lambda u, v: u + v, 42)
 except TypeError as e:
     print(e)
 # Output:
