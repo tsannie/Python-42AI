@@ -4,7 +4,7 @@ from ImageProcessor import ImageProcessor
 imp = ImageProcessor()
 arr = imp.load("../resources/elon_canaGAN.png")
 # Output :
-#Loading image of dimensions 200 x 200
+# Loading image of dimensions 200 x 200
 
 cf = ColorFilter()
 
@@ -23,8 +23,8 @@ imp.display(red)
 celluloid = cf.to_celluloid(arr)
 imp.display(celluloid)
 
-grayscale = cf.to_grayscale(arr, 'm')
+grayscale = cf.to_grayscale(arr, "m")
 imp.display(grayscale)
 
-grayscale = cf.to_grayscale(arr, 'weight', weights=[0.2, 0.3, 0.5])
+grayscale = cf.to_grayscale(arr, "weight", weights=[0.2, 0.3, 0.5])
 imp.display(grayscale)

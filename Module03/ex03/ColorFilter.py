@@ -1,7 +1,8 @@
 import numpy as np
 
+
 class ColorFilter:
-    """ Apply a variety of color filters on images """
+    """Apply a variety of color filters on images"""
 
     def invert(self, array):
         """
@@ -150,10 +151,10 @@ class ColorFilter:
             return None
         if not isinstance(array, np.ndarray):
             return None
-        if filter not in ['m', 'mean', 'w', 'weight']:
+        if filter not in ["m", "mean", "w", "weight"]:
             return None
 
-        if filter in ['m', 'mean']:
+        if filter in ["m", "mean"]:
             new = array.copy()
             for colomn in new:
                 for pixel in colomn:
@@ -162,11 +163,11 @@ class ColorFilter:
                     pixel[1] = color
                     pixel[2] = color
             return new
-        elif filter in ['w', 'weight']:
+        elif filter in ["w", "weight"]:
             # check weights
-            if 'weights' not in kwargs:
+            if "weights" not in kwargs:
                 return None
-            weights = kwargs['weights']
+            weights = kwargs["weights"]
             if len(weights) != 3:
                 return None
             if np.sum(weights) != 1:
@@ -179,6 +180,3 @@ class ColorFilter:
                     pixel[1] = color
                     pixel[2] = color
             return new
-
-
-

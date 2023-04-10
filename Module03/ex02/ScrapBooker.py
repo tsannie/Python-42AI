@@ -1,8 +1,9 @@
 import numpy as np
 
+
 class ScrapBooker:
     # within the class
-    def crop(self, array, dim, position=(0,0)):
+    def crop(self, array, dim, position=(0, 0)):
         """
         Crops the image as a rectangle via dim arguments (being the new height
         and width of the image) from the coordinates given by position arguments.
@@ -19,7 +20,7 @@ class ScrapBooker:
         ------
         This function should not raise any Exception.
         """
-        #spb.crop(arr1, (3,1),(1,0))
+        # spb.crop(arr1, (3,1),(1,0))
 
         if not isinstance(array, np.ndarray):
             return None
@@ -28,11 +29,14 @@ class ScrapBooker:
         if not isinstance(position, tuple) or len(position) != 2:
             return None
 
-        if dim[0] + position[0] > array.shape[0] or dim[1] + position[1] > array.shape[1]:
+        if (
+            dim[0] + position[0] > array.shape[0]
+            or dim[1] + position[1] > array.shape[1]
+        ):
             return None
-        return array[position[0]: position[0] + dim[0], position[1]: position[1] + dim[1]]
-
-
+        return array[
+            position[0] : position[0] + dim[0], position[1] : position[1] + dim[1]
+        ]
 
     def thin(self, array, n, axis):
         """
@@ -63,8 +67,7 @@ class ScrapBooker:
         if axis == 1 and n > array.shape[1]:
             return None
 
-        return np.delete(array, np.s_[n-1::n], axis)
-
+        return np.delete(array, np.s_[n - 1 :: n], axis)
 
     def juxtapose(self, array, n, axis):
         """

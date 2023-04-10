@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from csvreader import CsvReader as csv
 from mpl_toolkits.mplot3d import Axes3D
 
+
 class KmeansClustering:
     def __init__(self, max_iter=20, ncentroid=4):
         if not isinstance(max_iter, int):
@@ -18,38 +19,42 @@ class KmeansClustering:
         if ncentroid < 1:
             print("Error: ncentroid is less than 1.")
             exit()
-        self.ncentroid = ncentroid # number of centroids
-        self.max_iter = max_iter # number of max iterations to update the centroids
-        self.centroids = [] # values of the centroids
-        self.last_scores = 0.0 # last score of the centroids
-        self.stable = False # True if the centroids are stable
+        self.ncentroid = ncentroid  # number of centroids
+        self.max_iter = max_iter  # number of max iterations to update the centroids
+        self.centroids = []  # values of the centroids
+        self.last_scores = 0.0  # last score of the centroids
+        self.stable = False  # True if the centroids are stable
 
-        #plt
-        self.ax = plt.axes(projection='3d')
-
+        # plt
+        self.ax = plt.axes(projection="3d")
 
     def distance(self, x, y):
         return np.square(np.sum((x - y) ** 2))
 
     def display(self, data, c, i):
-        #output
+        # output
         print("##########################")
-        print("Iteration {}:".format(i))
+        print("Iteration {}:".format(i + 1))
         for e in range(self.centroids.shape[0]):
-            print("Centroid {}: {}".format(e+1, self.centroids[e]))
+            print("Centroid {}: {}".format(e + 1, self.centroids[e]))
             print("Number of data points in cluster: {}".format(np.sum(c == e)))
             print()
         print("Score: {:.2f}".format(self.last_scores))
 
-
-        #plt
+        # plt
         self.ax.clear()
-        self.ax.set_xlabel('height')
-        self.ax.set_ylabel('weight')
-        self.ax.set_zlabel('bone_density')
+        self.ax.set_xlabel("height")
+        self.ax.set_ylabel("weight")
+        self.ax.set_zlabel("bone_density")
         self.ax.set_title("solar_system_census")
         self.ax.scatter(data[:, 0], data[:, 1], data[:, 2], c=c)
-        self.ax.scatter(self.centroids[:, 0], self.centroids[:, 1], self.centroids[:, 2], c='red', marker='x')
+        self.ax.scatter(
+            self.centroids[:, 0],
+            self.centroids[:, 1],
+            self.centroids[:, 2],
+            c="red",
+            marker="x",
+        )
         plt.pause(1)
 
     def fit(self, X):
@@ -114,16 +119,23 @@ class KmeansClustering:
 
         return i_min
 
+
 def fatal():
-    print("Usage: python Kmeans.py  filepath=[path_to_dataset] ncentroid=[ncentroid] max_iter=[max_iter]")
+    print(
+        "Usage: python Kmeans.py  filepath=[path_to_dataset] ncentroid=[ncentroid] max_iter=[max_iter]"
+    )
     exit()
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     a = {}
     for arg in sys.argv[1:]:
         s = arg.split("=")
-        if len(s) != 2 or s[0] not in ["filepath", "ncentroid", "max_iter"] or s[0] in a:
+        if (
+            len(s) != 2
+            or s[0] not in ["filepath", "ncentroid", "max_iter"]
+            or s[0] in a
+        ):
             fatal()
         a[s[0]] = s[1]
 
@@ -144,9 +156,3 @@ if __name__ == "__main__":
         kc.fit(data)
     except:
         fatal()
-
-
-
-
-
-

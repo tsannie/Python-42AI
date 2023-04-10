@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def check_type(obj, dtype):
     if not isinstance(obj, dtype):
         return False
@@ -9,9 +10,7 @@ def check_type(obj, dtype):
     return True
 
 
-
 class NumPyCreator:
-
     @staticmethod
     def from_list(lst, dtype=None):
         if check_type(lst, list):
