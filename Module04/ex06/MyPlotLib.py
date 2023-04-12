@@ -1,8 +1,8 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 
-class MyPlotLib:
 
+class MyPlotLib:
     def _entry_check(self, data, features):
         if not isinstance(data, pd.DataFrame):
             raise ValueError("data must be a pandas DataFrame")

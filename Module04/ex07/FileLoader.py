@@ -1,11 +1,15 @@
 import pandas as pd
 
-class FileLoader:
 
+class FileLoader:
     def load(self, path):
         try:
             data = pd.read_csv(path)
-            print("Loading dataset of dimensions {} x {}".format(data.shape[0], data.shape[1]))
+            print(
+                "Loading dataset of dimensions {} x {}".format(
+                    data.shape[0], data.shape[1]
+                )
+            )
             return data
         except:
             print("Error: File not found")
@@ -21,4 +25,3 @@ class FileLoader:
             print(df.tail(-n))
         else:
             print("Error: n is null")
-
